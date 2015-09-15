@@ -7,13 +7,13 @@
 *.ear
 
 #ide stuff
-.project
-.prefs
-.classpath
-.settings
+*.project
+*.prefs
+*.classpath
+*.settings
 
 #other
-.backup
-.xls
-.xlsx
+*.backup
+*.xls
+*.xlsx
 
