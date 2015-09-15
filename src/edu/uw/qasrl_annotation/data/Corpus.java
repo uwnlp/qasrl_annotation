@@ -50,6 +50,7 @@ public class Corpus {
 		sentences.add(sentence);
 		predicates.add(currPredicates);
 		tokens.clear();
+		pids.clear();
 	}
 	
 	// Data format: {id} {word} {Y/N}
@@ -66,11 +67,11 @@ public class Corpus {
 			String[] columns = currLine.split("\\s+");
 			if (columns.length < 3) {
 				addSentenceAndPredicates(tokens, pids);
-			} else {
-				tokens.add(wordDict.addString(columns[1]));
+			} else {				
 				if (columns[2].equals("Y")) {
-					pids.add(tokens.size() - 1);
+					pids.add(tokens.size());
 				}
+				tokens.add(wordDict.addString(columns[1]));
 			}
 		}
 		if (tokens.size() > 0) {

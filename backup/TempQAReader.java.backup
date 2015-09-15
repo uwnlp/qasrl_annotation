@@ -1,0 +1,50 @@
+package edu.uw.qasrl_annotation.main;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import edu.uw.qasrl_annotation.data.AnnotatedSentence;
+import edu.uw.qasrl_annotation.data.Corpus;
+import edu.uw.qasrl_annotation.data.QADataset;
+import edu.uw.qasrl_annotation.data.Sentence;
+
+public class TempQAReader {
+	static String datapath = "/Users/luheng/versioned/qa_deps_test/data/wiki1.train.qa";
+	static String outputPath = "./sample/input.txt";
+	
+	public static void main(String[] args) {
+		Corpus corpus = new Corpus("temp");
+		QADataset ds = new QADataset(corpus);
+		try {
+			ds.loadData(datapath);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		// output to sample
+		BufferedWriter writer = null;
+		try {
+			 writer = new BufferedWriter(new FileWriter(
+					new File(outputPath)));
+			 int sc = 0;
+			 for (AnnotatedSentence sent : ds.sentences) {
+				Sentence s = sent.sentence;
+				for (int i = 0; i < s.length; i++) {
+					writer.write(String.format("%d\t%s\t%s\n",
+							i, s.getTokenString(i),
+							(sent.qaLists.containsKey(i) ? "Y" : "N")));
+				}
+				writer.write("\n");
+				if (++sc >= 100) {
+					break;
+				}
+			}
+			 writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+}

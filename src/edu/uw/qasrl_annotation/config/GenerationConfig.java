@@ -14,7 +14,7 @@ public class GenerationConfig {
 	public String inputFilePath = "./sample/input.txt";
 	
 	@Option(name = "-output", usage="")
-	public String outputFilePath = "./sample/output.txt";
+	public String outputFilePath = "./sample/output.xlsx";
 	
 	
 	public GenerationConfig(String[] args) {

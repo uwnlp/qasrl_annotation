@@ -13,34 +13,30 @@ import edu.uw.qasrl_annotation.io.XSSFOutputHelper;
 public class AnnotationSheetGenerator {
 	static GenerationConfig config = null;
 	static Corpus corpus = null;
-	static VerbInflectionDictionary inflDict;
+	static VerbInflectionDictionary inflDict = null;
 	static ArrayList<Sentence> sentences = null;
 	static ArrayList<ArrayList<TargetPredicate>> predicates = null;
 	
-	private static void loadData() {
-		try {
-			corpus.loadSentenceWithPredicates(config.inputFilePath);
-			VerbInflectionDictionary inflDict =
-					new VerbInflectionDictionary(corpus);
-			inflDict.loadDictionaryFromFile(config.verbInflPath);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	private static void loadData() throws IOException {
+		corpus = new Corpus("qa");
+		corpus.loadSentenceWithPredicates(config.inputFilePath);
+		inflDict = new VerbInflectionDictionary(corpus);
+		inflDict.loadDictionaryFromFile(config.verbInflPath);
 	}
 	
-	private static void generateAnnotationSheet() {
-		try {
-			XSSFOutputHelper.outputXlsx(corpus.sentences, corpus.predicates,
-					inflDict, config.outputFilePath);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	private static void generateAnnotationSheet() throws IOException {
+		XSSFOutputHelper.outputXlsx(corpus.sentences, corpus.predicates,
+				inflDict, config.outputFilePath);
 	}
 
 	
 	public static void main(String[] args) {
 		config = new GenerationConfig(args);
-		loadData();
-		generateAnnotationSheet();
+		try {
+			loadData();
+			generateAnnotationSheet();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

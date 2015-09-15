@@ -54,13 +54,13 @@ public class VerbInflectionDictionary {
 			}
 		}
 		reader.close();
-		
 		countInflections();
+		System.out.println(
+				String.format("Successfully read inflections. Inflection dictionary size: %d.",
+						inflMap.size()));
 	}
 	
-	public int getBestInflectionId(String verb) {
-		
-		
+	public int getBestInflectionId(String verb) {		
 		ArrayList<Integer> inflIds = inflMap.get(verb);
 		if (inflIds == null) {
 			return -1;

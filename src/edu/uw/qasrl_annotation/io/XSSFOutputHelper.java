@@ -35,8 +35,8 @@ import edu.uw.qasrl_annotation.data.Sentence;
 import edu.uw.qasrl_annotation.data.VerbInflectionDictionary;
 
 public class XSSFOutputHelper {
-	public static int maxNumSheetsPerFile = 5;
-	public static int maxNumSentsPerSheet = 12;
+	public static int maxNumSheetsPerFile = 10;
+	public static int maxNumSentsPerSheet = 10;
 	public static int maxNumQAs = 8;
 	
 	private static final String[] kAnnotationHeader = {
@@ -132,7 +132,9 @@ public class XSSFOutputHelper {
 				if (!wildcard) {
 					trgOptions = getTrgOptions(sent, propHead, inflDict);
 					if (trgOptions == null) {
-						System.out.println("Error: unidentified verb inflection.");
+						System.out.println("Error: unable to get inflection for verb: " +
+								sent.getTokenString(propHead));
+						continue;
 					} else {
 						trgConstraint = (XSSFDataValidationConstraint)
 							dvHelper.createExplicitListConstraint(
@@ -308,10 +310,8 @@ public class XSSFOutputHelper {
 			int idx = verb.indexOf('-');
 			verbPrefix = verb.substring(0, idx + 1);
 			verb = verb.substring(idx + 1);
-			// System.out.println(verbPrefix + ", " + verb);
 		}
 		ArrayList<Integer> inflIds = inflDict.inflMap.get(verb);
-		
 		if (inflIds == null) {
 			return null;
 		}
