@@ -30,12 +30,11 @@ import edu.uw.qasrl_annotation.annotation.QASlotAuxiliaryVerbs;
 import edu.uw.qasrl_annotation.annotation.QASlotPlaceHolders;
 import edu.uw.qasrl_annotation.annotation.QASlotPrepositions;
 import edu.uw.qasrl_annotation.annotation.QASlotQuestionWords;
-import edu.uw.qasrl_annotation.data.Predicate;
+import edu.uw.qasrl_annotation.data.TargetPredicate;
 import edu.uw.qasrl_annotation.data.Sentence;
 import edu.uw.qasrl_annotation.data.VerbInflectionDictionary;
 
 public class XSSFOutputHelper {
-	
 	public static int maxNumSheetsPerFile = 5;
 	public static int maxNumSentsPerSheet = 12;
 	public static int maxNumQAs = 8;
@@ -47,7 +46,7 @@ public class XSSFOutputHelper {
 	
 	public static void outputXlsx(
 			ArrayList<Sentence> sentences,
-			ArrayList<ArrayList<Predicate>> predicates,
+			ArrayList<ArrayList<TargetPredicate>> predicates,
 			VerbInflectionDictionary inflDict,
 			String xlsxFileName) throws IOException {
 		
@@ -112,7 +111,7 @@ public class XSSFOutputHelper {
         	}
         	
 			Sentence sent = sentences.get(i);
-			ArrayList<Predicate> props = predicates.get(i);
+			ArrayList<TargetPredicate> props = predicates.get(i);
 			if (props.size() == 0) {
 				continue;
 			}
@@ -124,7 +123,7 @@ public class XSSFOutputHelper {
 						ppOptions.toArray(new String[ppOptions.size()]));
 			
 			for (int j = 0; j < props.size(); j++) {
-				Predicate prop = props.get(j);
+				TargetPredicate prop = props.get(j);
 				int propHead = prop.span[1] - 1;
 				ArrayList<String> trgOptions = null;
 				XSSFDataValidationConstraint trgConstraint = null;
