@@ -16,6 +16,7 @@
         <pathelement location="libs/poi-3.11-20141221.jar"/>
         <pathelement location="libs/poi-ooxml-schemas-3.11-20141221.jar"/>
         <pathelement location="libs/args4j-2.0.10.jar"/>
+        <pathelement location="libs/xmlbeans-2.6.0.jar"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
@@ -54,6 +55,11 @@
     </target>
     <target name="TempQAReader">
         <java classname="edu.uw.qasrl_annotation.main.TempQAReader" failonerror="true" fork="yes">
+            <classpath refid="qasrl_annotation.classpath"/>
+        </java>
+    </target>
+    <target name="AnnotationSheetGenerator">
+        <java classname="edu.uw.qasrl_annotation.main.AnnotationSheetGenerator" failonerror="true" fork="yes">
             <classpath refid="qasrl_annotation.classpath"/>
         </java>
     </target>
