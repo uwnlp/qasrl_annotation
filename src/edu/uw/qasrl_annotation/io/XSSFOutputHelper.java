@@ -44,6 +44,47 @@ public class XSSFOutputHelper {
 		"PH1", "TRG", "PH2", "PP", "PH3", "?",
 		"Answer1", "Answer2", "Answer3", "Answer4", "Answer5", "Note" };
 	
+	private static void finishSheet(XSSFSheet sheet, 
+			XSSFDataValidationHelper dvHelper,
+			CellRangeAddressList whCells,
+			CellRangeAddressList auxCells,
+			CellRangeAddressList ph1Cells,
+			CellRangeAddressList ph2Cells,
+			CellRangeAddressList ph3Cells){
+		// Add WH, AUX, TRG, PH constraints.
+        XSSFDataValidationConstraint
+        	whConstraint = (XSSFDataValidationConstraint)
+        		dvHelper.createExplicitListConstraint(QASlotQuestionWords.values),
+        	auxConstraint = (XSSFDataValidationConstraint)
+            	dvHelper.createExplicitListConstraint(QASlotAuxiliaryVerbs.values),
+            phConstraint = (XSSFDataValidationConstraint)
+            	dvHelper.createExplicitListConstraint(QASlotPlaceHolders.values),
+            ph3Constraint = (XSSFDataValidationConstraint)
+              	dvHelper.createExplicitListConstraint(QASlotPlaceHolders.ph3Values);
+        
+        XSSFDataValidation
+        	whVal = (XSSFDataValidation) dvHelper.createValidation(whConstraint, whCells),
+        	auxVal = (XSSFDataValidation) dvHelper.createValidation(auxConstraint, auxCells),
+        	ph1Val = (XSSFDataValidation) dvHelper.createValidation(phConstraint, ph1Cells),
+        	ph2Val = (XSSFDataValidation) dvHelper.createValidation(phConstraint, ph2Cells),
+        	ph3Val = (XSSFDataValidation) dvHelper.createValidation(ph3Constraint, ph3Cells);
+        
+        whVal.createErrorBox("Invalid input value", "See dropdown box for valid options."); whVal.setShowErrorBox(true);
+        auxVal.createErrorBox("Invalid input value", "See dropdown box for valid options."); auxVal.setShowErrorBox(true);
+        ph1Val.createErrorBox("Invalid input value", "See dropdown box for valid options."); ph1Val.setShowErrorBox(true);
+        ph2Val.createErrorBox("Invalid input value", "See dropdown box for valid options."); ph2Val.setShowErrorBox(true);
+        ph3Val.createErrorBox("Invalid input value", "See dropdown box for valid options."); ph3Val.setShowErrorBox(true);
+        
+        sheet.addValidationData(whVal);
+        sheet.addValidationData(auxVal);
+        sheet.addValidationData(ph1Val);
+        sheet.addValidationData(ph2Val);
+        sheet.addValidationData(ph3Val);
+        
+        sheet.setZoom(125);
+        sheet.setDefaultColumnWidth(10);
+	}
+	
 	public static void outputXlsx(
 			ArrayList<Sentence> sentences,
 			ArrayList<ArrayList<TargetPredicate>> predicates,
@@ -257,40 +298,15 @@ public class XSSFOutputHelper {
 			if (numSentsOnCurrentSheet == maxNumSentsPerSheet) {
 				// Finish a sheet
 				numSentsOnCurrentSheet = 0;
-				// Add WH, AUX, TRG, PH constraints.
-		        XSSFDataValidationConstraint
-		        	whConstraint = (XSSFDataValidationConstraint)
-		        		dvHelper.createExplicitListConstraint(QASlotQuestionWords.values),
-		        	auxConstraint = (XSSFDataValidationConstraint)
-		            	dvHelper.createExplicitListConstraint(QASlotAuxiliaryVerbs.values),
-		            phConstraint = (XSSFDataValidationConstraint)
-		            	dvHelper.createExplicitListConstraint(QASlotPlaceHolders.values),
-		            ph3Constraint = (XSSFDataValidationConstraint)
-		              	dvHelper.createExplicitListConstraint(QASlotPlaceHolders.ph3Values);
-		        
-		        XSSFDataValidation
-		        	whVal = (XSSFDataValidation) dvHelper.createValidation(whConstraint, whCells),
-		        	auxVal = (XSSFDataValidation) dvHelper.createValidation(auxConstraint, auxCells),
-		        	ph1Val = (XSSFDataValidation) dvHelper.createValidation(phConstraint, ph1Cells),
-		        	ph2Val = (XSSFDataValidation) dvHelper.createValidation(phConstraint, ph2Cells),
-		        	ph3Val = (XSSFDataValidation) dvHelper.createValidation(ph3Constraint, ph3Cells);
-		        
-		        whVal.createErrorBox("Invalid input value", "See dropdown box for valid options."); whVal.setShowErrorBox(true);
-		        auxVal.createErrorBox("Invalid input value", "See dropdown box for valid options."); auxVal.setShowErrorBox(true);
-		        ph1Val.createErrorBox("Invalid input value", "See dropdown box for valid options."); ph1Val.setShowErrorBox(true);
-		        ph2Val.createErrorBox("Invalid input value", "See dropdown box for valid options."); ph2Val.setShowErrorBox(true);
-		        ph3Val.createErrorBox("Invalid input value", "See dropdown box for valid options."); ph3Val.setShowErrorBox(true);
-		        
-		        sheet.addValidationData(whVal);
-		        sheet.addValidationData(auxVal);
-		        sheet.addValidationData(ph1Val);
-		        sheet.addValidationData(ph2Val);
-		        sheet.addValidationData(ph3Val);
-		        
-		        sheet.setZoom(125);
-		        sheet.setDefaultColumnWidth(10);
+				finishSheet(sheet, dvHelper, whCells, auxCells, ph1Cells, ph2Cells, ph3Cells);
 			}	
 		}
+        
+        if (numSentsOnCurrentSheet > 0) {
+        	// there are sentences left in this sheet - finalize it
+        	finishSheet(sheet, dvHelper, whCells, auxCells, ph1Cells, ph2Cells, ph3Cells);
+        }
+        
         
         FileOutputStream outStream = new FileOutputStream(new File(xlsxFileName));
         workbook.write(outStream);
