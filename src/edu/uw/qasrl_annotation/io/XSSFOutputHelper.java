@@ -303,7 +303,7 @@ public class XSSFOutputHelper {
 		}
         
         if (numSentsOnCurrentSheet > 0) {
-        	// there are sentences left in this sheet - finalize it!
+        	// there are sentences left in this sheet - finalize it
         	finishSheet(sheet, dvHelper, whCells, auxCells, ph1Cells, ph2Cells, ph3Cells);
         }
         
