@@ -14,19 +14,19 @@ public class QADataset {
 	public ArrayList<AnnotatedSentence> sentences;
 	public ArrayList<QAPair> questions;
 	public HashMap<Integer, Sentence> sentenceMap;
-	
+
 	public QADataset(Corpus corpus, String name) {
 		this(corpus);
 		this.datasetName = name;
 	}
-	
+
 	public QADataset(Corpus corpus) {
 		this.corpus = corpus;
 		this.sentences = new ArrayList<AnnotatedSentence>();
 		this.questions = new ArrayList<QAPair>();
 		this.sentenceMap = new HashMap<Integer, Sentence>();
 	}
-	
+
 	public Sentence getSentence(int sentId) {
 		return sentenceMap.get(sentId);
 	}
@@ -34,7 +34,7 @@ public class QADataset {
 	public Collection<Integer> getSentenceIds() {
 		return sentenceMap.keySet();
 	}
-	
+
 	public void loadData(String filePath) throws IOException {
 		BufferedReader reader = new BufferedReader(new FileReader(
 				new File(filePath)));

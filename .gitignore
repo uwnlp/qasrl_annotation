@@ -11,9 +11,14 @@
 *.prefs
 *.classpath
 *.settings
+*.iml
+.idea
 
 #other
 *.backup
 *.xls
 *.xlsx
+
+#library
+libs
 

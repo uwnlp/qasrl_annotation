@@ -7,17 +7,17 @@ public class TargetPredicate {
 	// instead of "considered". Not sure we will need this eventually, but it
 	// might help with annotation.
 	public int[] span;
-	
+
 	public TargetPredicate(Sentence sentence, int propId, int[] span) {
 		this.sentence = sentence;
 		this.propId = propId;
-		this.span = new int[] {span[0], span[1]};
+		this.span = new int[]{span[0], span[1]};
 	}
-	
+
 	@Override
 	public String toString() {
 		// TODO
 		return "";
 	}
-	
+
 }

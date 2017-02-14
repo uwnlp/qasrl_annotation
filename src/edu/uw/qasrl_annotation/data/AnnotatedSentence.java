@@ -8,13 +8,13 @@ public class AnnotatedSentence {
 	public Sentence sentence;
 	public HashMap<Integer, ArrayList<QAPair>> qaLists;
 	public HashSet<String> annotators;
-	
+
 	public AnnotatedSentence(Sentence sentence) {
 		this.sentence = sentence;
 		this.qaLists = new HashMap<Integer, ArrayList<QAPair>>();
 		this.annotators = new HashSet<String>();
 	}
-	
+
 	public boolean addProposition(int propHead) {
 		if (qaLists.containsKey(propHead)) {
 			return false;
@@ -22,7 +22,7 @@ public class AnnotatedSentence {
 		qaLists.put(propHead, new ArrayList<QAPair>());
 		return true;
 	}
-	
+
 	public boolean addQAPair(int propHead, QAPair qa) {
 		if (!qaLists.containsKey(propHead)) {
 			return false;

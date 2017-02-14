@@ -8,21 +8,21 @@ public class QASlotPlaceHolders {
 			"",
 			"someone",
 			"something",
-		};
+	};
 	public static final HashSet<String> valueSet;
-	
+
 	public static final String[] ph3Values = {
-		"",
-		"someone",
-		"something",
-		"somewhere",
-		"do",
-		"doing",
-		"do something",
-		"doing something",
+			"",
+			"someone",
+			"something",
+			"somewhere",
+			"do",
+			"doing",
+			"do something",
+			"doing something",
 	};
 	public static final HashSet<String> ph3ValueSet;
-	
+
 	static {
 		valueSet = new HashSet<String>();
 		ph3ValueSet = new HashSet<String>();

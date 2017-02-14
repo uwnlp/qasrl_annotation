@@ -1,15 +1,15 @@
 package edu.uw.qasrl_annotation.data;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import edu.uw.qasrl_annotation.annotation.AnswerSpanAligner;
 import edu.uw.qasrl_annotation.annotation.QuestionEncoder;
 import edu.uw.qasrl_annotation.util.StrUtils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class QAPair implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	public Sentence sentence;
 	public int propHead, questionId;
 	public String[] questionWords;
@@ -18,8 +18,8 @@ public class QAPair implements java.io.Serializable {
 	public ArrayList<String> answers;
 	public ArrayList<Object> annotators;
 	public String comment = "";
-	
-	public QAPair(Sentence sent, int prop, String[] question, String answer) { 
+
+	public QAPair(Sentence sent, int prop, String[] question, String answer) {
 		sentence = sent;
 		propHead = prop;
 		questionWords = new String[question.length];
@@ -34,8 +34,8 @@ public class QAPair implements java.io.Serializable {
 		addAnswer(answer);
 		annotators = new ArrayList<Object>();
 	}
-	
-	public QAPair(Sentence sent, int prop, String qstr, String answer) { 
+
+	public QAPair(Sentence sent, int prop, String qstr, String answer) {
 		sentence = sent;
 		propHead = prop;
 		questionWords = null;
@@ -54,7 +54,7 @@ public class QAPair implements java.io.Serializable {
 	}
 
 	public QAPair(Sentence sent, int prop, String[] question, String answer,
-			String annotator) { 
+	              String annotator) {
 		sentence = sent;
 		propHead = prop;
 		questionWords = new String[question.length];
@@ -67,19 +67,21 @@ public class QAPair implements java.io.Serializable {
 		answers = new ArrayList<String>();
 		Arrays.fill(answerFlags, 0);
 		addAnswer(answer);
-		
+
 		annotators = new ArrayList<Object>();
 		annotators.add(annotator);
 	}
-	
+
 	public QAPair(Sentence sent, int propHead, int questionId,
-			String[] question) {
+	              String[] question) {
 		this(sent, propHead, question, "", "");
 		this.questionId = questionId;
 	}
 
 
-	/** return false if answer is not aligned */
+	/**
+	 * return false if answer is not aligned
+	 */
 	public boolean addAnswer(String answer) {
 		if (answer.isEmpty()) {
 			return false;
@@ -95,37 +97,37 @@ public class QAPair implements java.io.Serializable {
 		}
 		return aligned;
 	}
-	
+
 	public void addAnswer(int[] flags) {
 		for (int i = 0; i < answerFlags.length; i++) {
 			answerFlags[i] += flags[i];
 		}
 	}
-	
+
 	public String getQuestionLabel() {
 		return questionLabel;
 	}
-	
+
 	public String getAnswerString() {
 		String answerStr = "";
 		int prevIdx = -1;
 		for (int i = 0; i < sentence.length; i++) {
 			if (answerFlags[i] > 0) {
-				answerStr +=  (i > prevIdx + 1 && prevIdx >= 0) ? " ... " : " ";
+				answerStr += (i > prevIdx + 1 && prevIdx >= 0) ? " ... " : " ";
 				answerStr += sentence.getTokenString(i);
 				prevIdx = i;
 			}
 		}
 		return answerStr.trim();
 	}
-	
+
 	public String getQuestionString() {
 		if (questionWords == null) {
 			return "";
 		}
 		return StrUtils.join(" ", questionWords) + "?";
 	}
-	
+
 	public String getPaddedQuestionString() {
 		if (questionWords == null) {
 			return "";
@@ -136,7 +138,7 @@ public class QAPair implements java.io.Serializable {
 		}
 		return qstr + "?";
 	}
-	
+
 	public String toString() {
 		String result = StrUtils.join(" ", questionWords);
 		result += "\t [A]: " + getAnswerString();

@@ -17,9 +17,9 @@ public class StrUtils {
 		}
 		return joined;
 	}
-	
+
 	public static String join(String delimiter, String padding,
-			Object[] objects) {
+	                          Object[] objects) {
 		String joined = "";
 		for (int i = 0; i < objects.length; i++) {
 			if (!joined.isEmpty()) {
@@ -30,7 +30,7 @@ public class StrUtils {
 		}
 		return joined;
 	}
-	
+
 	public static String join(String delimiter, Object[] objects, int startId) {
 		String joined = "";
 		for (int i = startId; i < objects.length; i++) {
@@ -43,7 +43,7 @@ public class StrUtils {
 		}
 		return joined;
 	}
-	
+
 	public static String join(String delimiter, ArrayList<Object> objects) {
 		String joined = "";
 		for (Object obj : objects) {
@@ -57,7 +57,7 @@ public class StrUtils {
 		}
 		return joined;
 	}
-	
+
 	public static String numberedJoin(String delimiter, String[] stringArr) {
 		String joined = "";
 		for (int i = 0; i < stringArr.length; i++) {
@@ -70,9 +70,9 @@ public class StrUtils {
 		}
 		return joined;
 	}
-	
+
 	public static String join(String delimiter, String[] stringArr,
-			int startIdx, int endIdx) {
+	                          int startIdx, int endIdx) {
 		String joined = "";
 		for (int i = startIdx; i < endIdx && i < stringArr.length; i++) {
 			if (!stringArr[i].trim().isEmpty()) {
@@ -84,7 +84,7 @@ public class StrUtils {
 		}
 		return joined;
 	}
-	
+
 	public static String intArrayToString(String delimiter, int[] intArr) {
 		String joined = "";
 		for (int i = 0; i < intArr.length; i++) {
@@ -95,9 +95,9 @@ public class StrUtils {
 		}
 		return joined;
 	}
-	
+
 	public static String doubleArrayToString(String delimiter,
-										     double[] doubleArr) {
+	                                         double[] doubleArr) {
 		String joined = "";
 		for (int i = 0; i < doubleArr.length; i++) {
 			if (i > 0) {
@@ -107,7 +107,7 @@ public class StrUtils {
 		}
 		return joined;
 	}
-	
+
 	public static boolean isEmptyStringArray(ArrayList<String> strArray) {
 		for (String str : strArray) {
 			if (!str.trim().isEmpty()) {
@@ -116,7 +116,7 @@ public class StrUtils {
 		}
 		return true;
 	}
-	
+
 	public static HashSet<String> asSet(String... vals) {
 		return new HashSet<String>(Arrays.asList(vals));
 	}

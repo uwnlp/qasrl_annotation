@@ -8,18 +8,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class VerbInflectionDictionary {	
-	Corpus corpus;
+public class VerbInflectionDictionary {
 	public ArrayList<String[]> inflections;
 	public int[] inflCount;
 	public HashMap<String, ArrayList<Integer>> inflMap;
-	
+	Corpus corpus;
+
 	public VerbInflectionDictionary(Corpus corpus) {
 		this.corpus = corpus;
 		inflections = new ArrayList<String[]>();
 		inflMap = new HashMap<String, ArrayList<Integer>>();
 	}
-	
+
 	public void loadDictionaryFromFile(String filePath) throws IOException {
 		BufferedReader reader;
 		reader = new BufferedReader(new InputStreamReader(
@@ -44,7 +44,7 @@ public class VerbInflectionDictionary {
 						continue;
 					}
 					if (!inflMap.containsKey(v)) {
-						inflMap.put(v, new ArrayList<Integer>()); 
+						inflMap.put(v, new ArrayList<Integer>());
 					}
 					ArrayList<Integer> inflIds = inflMap.get(v);
 					if (!inflIds.contains(inflId)) {
@@ -59,8 +59,8 @@ public class VerbInflectionDictionary {
 				String.format("Successfully read inflections. Inflection dictionary size: %d.",
 						inflMap.size()));
 	}
-	
-	public int getBestInflectionId(String verb) {		
+
+	public int getBestInflectionId(String verb) {
 		ArrayList<Integer> inflIds = inflMap.get(verb);
 		if (inflIds == null) {
 			return -1;
@@ -75,7 +75,7 @@ public class VerbInflectionDictionary {
 		}
 		return bestId;
 	}
-	
+
 	public String[] getBestInflections(String verb) {
 		String verbPrefix = "";
 		if (verb.contains("-")) {
@@ -101,12 +101,12 @@ public class VerbInflectionDictionary {
 		}
 		return infl;
 	}
-	
+
 	public String getBestBaseVerb(String verb) {
 		int bestId = getBestInflectionId(verb);
 		return bestId < 0 ? verb : inflections.get(bestId)[0];
 	}
-	
+
 	private void countInflections() {
 		inflCount = new int[inflections.size()];
 		Arrays.fill(inflCount, 0);
@@ -115,10 +115,10 @@ public class VerbInflectionDictionary {
 				String w = sent.getTokenString(i);
 				if (inflMap.containsKey(w)) {
 					for (int inflId : inflMap.get(w)) {
-						inflCount[inflId] ++;
+						inflCount[inflId]++;
 					}
 				}
 			}
 		}
-	}	
+	}
 }

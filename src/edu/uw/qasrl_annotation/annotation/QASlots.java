@@ -8,16 +8,16 @@ public class QASlots {
 	public static final int PH2SlotId = 4;
 	public static final int PPSlotId = 5;
 	public static final int PH3SlotId = 6;
-	
+
 	public static final int numSlots = 7;
-	
+
 	public static String[] slotNames = {
-		"WH",
-		"AUX",
-		"PH1",
-		"TRG",
-		"PH2",
-		"PP",
-		"PP3"
+			"WH",
+			"AUX",
+			"PH1",
+			"TRG",
+			"PH2",
+			"PP",
+			"PP3"
 	};
 }

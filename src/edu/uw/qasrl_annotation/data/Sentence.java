@@ -7,9 +7,9 @@ public class Sentence {
 	public int length;
 	public int sentenceID;
 	public String source;
-	
+
 	public transient Corpus corpus;
-	
+
 	public Sentence(int[] tokens, Corpus corpus, int sentenceID) {
 		this.tokens = tokens;
 		this.length = tokens.length;
@@ -20,11 +20,11 @@ public class Sentence {
 	public String getTokensString() {
 		return StrUtils.join(" ", corpus.wordDict.getStringArray(tokens));
 	}
-	
+
 	public String getTokenString(int index) {
 		return corpus.wordDict.getString(tokens[index]);
 	}
-	
+
 	public String getTokenString(int[] span) {
 		String str = "";
 		for (int i = span[0]; i < span[1]; i++) {
@@ -44,12 +44,12 @@ public class Sentence {
 		}
 		return false;
 	}
-	
+
 	public String getNumberedTokensString() {
 		return StrUtils.numberedJoin(" ",
 				corpus.wordDict.getStringArray(tokens));
 	}
-	
+
 	public boolean containsQuestion() {
 		for (int i = 0; i < length; i++) {
 			String word = getTokenString(i);
@@ -59,14 +59,12 @@ public class Sentence {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "ID:\t" + this.sentenceID + "\n" +
 				this.getTokensString();
 	}
-	
-	
-	
-	
+
+
 }
